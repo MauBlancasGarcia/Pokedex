@@ -6,14 +6,14 @@ export const loadingSlice = createSlice({
   name: "loading",
   initialState,
   reducers: {
-    verdadero: (state) => {
+    changeTrue: (state) => {
       state.value = true;
     },
-    falso: (state) => {
+    changeFalse: (state) => {
       state.value = false;
     },
   },
 });
-export const { verdadero, falso } = loadingSlice.actions;
+export const { changeTrue, changeFalse } = loadingSlice.actions;
 export const selectLoading = (state) => state.loading.value;
 export default loadingSlice.reducer;

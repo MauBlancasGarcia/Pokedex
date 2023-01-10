@@ -1,9 +1,9 @@
 import React from "react";
-
+import "../styles/NotFoundPage.css";
 function NotFound() {
   return (
-    <div>
-      <h1>Pagina no encontrada :C</h1>
+    <div className="notfound">
+      <h1>Pagina no encontrada</h1>
     </div>
   );
 }

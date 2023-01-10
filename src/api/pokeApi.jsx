@@ -1,4 +1,6 @@
 import axios from "axios";
+//se mostraran 12 pokemones en cada pagina
+const limit = 12;
 
 export const searchPokemon = async (name) => {
   let url = `https://pokeapi.co/api/v2/pokemon/${name}`;
@@ -8,14 +10,18 @@ export const searchPokemon = async (name) => {
 };
 
 export const getPokemonData = async (url) => {
-  const resp = await axios.get(url);
-  const data = resp.data;
-  return data;
+  try {
+    const resp = await axios.get(url);
+    const data = resp.data;
+    return data;
+  } catch (err) {}
 };
 
-export async function getPokemonsList(offset, limit) {
-  let url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
-  const resp = await axios.get(url);
-  const data = resp.data;
-  return data;
-}
+export const getPokemonsList = async (offset) => {
+  try {
+    let url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
+    const resp = await axios.get(url);
+    const data = resp.data;
+    return data;
+  } catch (err) {}
+};
