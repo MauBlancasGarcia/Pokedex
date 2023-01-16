@@ -23,7 +23,7 @@ function Pokedex() {
       ) : (
         <div
           className="row row-cols-4-xxl d-flex justify-content-evenly"
-          style={{ marginTop: "1rem" }}
+          style={{ paddingTop: "1rem" }}
         >
           {Pokemons.map((pokemon) => {
             return (
@@ -36,7 +36,7 @@ function Pokedex() {
       )}
       <div
         className="paginate d-flex justify-content-center"
-        style={{ margin: "2rem" }}
+        style={{ marginTop: "2rem", marginBottom: "2rem" }}
       >
         <Pagination></Pagination>
       </div>
