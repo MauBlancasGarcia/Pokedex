@@ -8,9 +8,12 @@ export const pokemonsSlice = createSlice({
     addPokemons: (state, action) => {
       state.value = action.payload;
     },
+    addCardPokemon: (state, action) => {
+      state.cardpokemon = action.payload;
+    },
   },
 });
-export const { addPokemons } = pokemonsSlice.actions;
+export const { addPokemons, addCardPokemon } = pokemonsSlice.actions;
 
 export const selectPokemons = (state) => state.pokemons.value;
 
