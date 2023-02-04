@@ -1,7 +1,8 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemonData, getPokemonsList } from "../api/pokeApi";
+import { getPokemonData, getPokemonsList, searchPokemon } from "../api/pokeApi";
+import NotFound from "../components/NotFound";
 import Pokedex from "../components/Pokedex";
 import { changeFalse, changeTrue } from "../features/loading/loadingSlice";
 import {
@@ -9,11 +10,21 @@ import {
   selectPage,
   TotalPages,
 } from "../features/page/pageSlice";
-import { addPokemons } from "../features/pokemons/pokemonsSlice";
+import {
+  addPokemons,
+  changepokemonfound,
+  changesearch,
+  selectNamePokemon,
+  selectPokemonFound,
+  selectSearchPokemon,
+} from "../features/pokemons/pokemonsSlice";
 function Home() {
   const dispatch = useDispatch();
   const page = useSelector(selectPage);
   const offset = useSelector(selectOffset);
+  const namepokemon = useSelector(selectNamePokemon);
+  const search = useSelector(selectSearchPokemon);
+  const pokemonfound = useSelector(selectPokemonFound);
 
   const getPokemons = async () => {
     dispatch(changeTrue());
@@ -30,11 +41,37 @@ function Home() {
   };
 
   useEffect(() => {
-    getPokemons();
+    if (!search) {
+      getPokemons();
+    }
   }, [page]);
+
+  useEffect(() => {
+    if (!namepokemon) {
+      dispatch(changepokemonfound(false));
+      getPokemons();
+    } else {
+      Searching();
+    }
+  }, [namepokemon]);
+
+  const Searching = async () => {
+    dispatch(changeTrue());
+    dispatch(changesearch(true));
+    dispatch(changepokemonfound(false));
+    const result = await searchPokemon(namepokemon);
+    if (!result) {
+      dispatch(changepokemonfound(true));
+    } else {
+      dispatch(addPokemons([result]));
+      dispatch(TotalPages(1));
+    }
+    dispatch(changesearch(false));
+    dispatch(changeFalse());
+  };
   return (
     <div className="container">
-      <Pokedex />
+      {pokemonfound ? <NotFound></NotFound> : <Pokedex />}
     </div>
   );
 }
